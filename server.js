@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  let string = req.params.body;
+  let string = req.params.stri;
   res.status(200).json({string: string});
 })
 
