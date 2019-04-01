@@ -7,7 +7,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/', (req, res) => {
-  res.status(200).send("SUCCESS");
+  res.send("SUCCESS");
 })
 
 app.listen(PORT, () => {
