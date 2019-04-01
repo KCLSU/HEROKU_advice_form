@@ -7,6 +7,11 @@ app.get('/', (req, res) => {
   res.send("SUCCESS");
 })
 
+app.post('/', (req, res) => {
+  let string = req.params.body;
+  res.send(string);
+})
+
 app.listen(PORT, () => {
   console.log("The server is running and listening on port " + PORT)
 });
