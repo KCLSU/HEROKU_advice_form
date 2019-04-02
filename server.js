@@ -9,6 +9,7 @@ var PORT = process.env.PORT || 3000
 
 app.get('/:stri', (req, res) => {
   let testString = req.params.stri;
+  console.log(testString)
   res.status(200).json({testString: testString});
 })
 
