@@ -9,6 +9,7 @@ function sendData(str){
   console.log(str)
   let postData = {};
       postData.method = 'POST';
+      postData.agent = process.env.FIXIE_URL
       postData.body = JSON.stringify(str);
       postData.headers = {
       'Content-Type': 'application/json'
