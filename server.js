@@ -25,12 +25,8 @@ app.get('/entry/:str', (req, res) => {
 
 app.post('/send', (req, res) => {
   let data = req.body;
-  console.log(typeof data)
   console.log("HEROKU data")
   console.log(data)
-    console.log("UTIL INSPECT")
-   console.log(util.inspect(data));
-   res.send("YAY")
   sendData(data)
     .then(outcome => res.status(202).send(outcome))
     .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
