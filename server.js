@@ -31,9 +31,9 @@ app.post('/send', (req, res) => {
     console.log("UTIL INSPECT")
    console.log(util.inspect(data));
    res.send("YAY")
-  // sendData(data)
-  //   .then(outcome => res.status(202).send(outcome))
-  //   .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
+  sendData(data)
+    .then(outcome => res.status(202).send(outcome))
+    .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
 });
 
 
