@@ -1,14 +1,15 @@
 var fetch = require('node-fetch')
-var url = 'https://api.advicepro.org.uk/apistaging/Referrals'
+var url;
 var HttpsProxyAgent = require('https-proxy-agent');
 require('dotenv').config();
 
 
 
 function sendData(str){
+  url = process.env.ADVICE_PRO_URL;
+  str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
+  str.AgencyAPIKey = process.env.ADVICE_PRO_API;
 
-  console.log("Received string")
-  console.log(str)
   let postData = {};
       postData.method = 'POST';
       postData.agent = new HttpsProxyAgent(process.env.FIXIE_URL);
@@ -17,20 +18,12 @@ function sendData(str){
       'Content-Type': 'application/json'
     }
 
-  console.log("Stringified string")
-  console.log(postData.body)
-  console.log(typeof postData.body)
-  console.log(postData)
-
   return fetch(url, postData)
             .then(response => {
-              console.log("Send Data")
-              console.log(response.ok)
-              return "Submitted";
+              return {status: "Submitted"};
             })
             .catch(err => {
-              console.log(err)
-              return "Failed"
+              return {status: "Failed", error: err}
             })
 }
 

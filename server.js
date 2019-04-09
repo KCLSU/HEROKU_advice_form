@@ -25,10 +25,13 @@ app.get('/entry/:str', (req, res) => {
 
 app.post('/send', (req, res) => {
   let data = req.body;
-  console.log("HEROKU data")
-  console.log(data)
-  sendData(data)
-    .then(outcome => res.status(202).send(outcome))
+  let transfer = sendData(data)
+    .then(transfer => {
+      if (transfer.status === 'Submitted'){
+        res.status(200).send(transfer)
+      }
+      else res.status(400).send(transfer)
+      })
     .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
 });
 
