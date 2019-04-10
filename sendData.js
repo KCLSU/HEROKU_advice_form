@@ -4,7 +4,6 @@ var HttpsProxyAgent = require('https-proxy-agent');
 require('dotenv').config();
 
 
-
 function sendData(str){
   url = process.env.ADVICE_PRO_URL;
   str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
