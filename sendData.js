@@ -9,7 +9,7 @@ function sendData(str){
 
   str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
   str.AgencyAPIKey = process.env.ADVICE_PRO_API;
-  url = process.env.ADVICE_PRO_URL;
+  url = 'http://localhost:2000/server';
 
   let postData = {};
       postData.method = 'POST';
