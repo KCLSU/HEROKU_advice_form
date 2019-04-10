@@ -22,7 +22,7 @@ function sendData(str){
               return {status: "Submitted"};
             })
             .catch(err => {
-              return {status: "Failed", error: err}
+              return {status: "Unsuccessful", error: err}
             })
 }
 
