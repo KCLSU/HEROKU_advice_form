@@ -27,7 +27,6 @@ app.post('/send', (req, res) => {
   let data = req.body;
   let transfer = sendData(data)
     .then(transfer => {
-      console.log(transfer)
       if (transfer.status === 'Submitted'){
         res.status(200).send(transfer)
       }
