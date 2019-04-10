@@ -21,7 +21,7 @@ function sendData(str){
               return {status: "Submitted"};
             })
             .catch(err => {
-              return {status: "Unsuccessful", error: err}
+              return {err}
             })
 }
 
