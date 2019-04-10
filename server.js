@@ -30,7 +30,7 @@ app.post('/send', (req, res) => {
       if (transfer.status === 'Submitted'){
         res.status(200).send(transfer)
       }
-      else res.status(400).send(transfer)
+      else res.status(400).send(transfer.message)
       })
     .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
 });
