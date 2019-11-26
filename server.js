@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser');
 var sendData = require('./sendData.js')
+var fetchNews = require('./fetchNews.js')
 var util = require('util');
 var app = express();
 var cors = require('cors');
@@ -22,6 +23,14 @@ app.get('/entry/:str', (req, res) => {
   .then(outcome => res.status(202).send(outcome))
   .catch(err => {res.status(500).send({"error":err, "status": "Failed"})})
 });
+
+app.get('/newslist/:id', (req, res) => {
+  let id = req.params.id;
+  let url = `https://kclsu.org/svc/feeds/news/${id}`
+  fetchNews(url)
+  .then(result => res.status(200).send(result))
+  .catch(err => {res.status(500).send({"error":err, "status": "Failed"})})
+})
 
 app.post('/send', (req, res) => {
   let data = req.body;
