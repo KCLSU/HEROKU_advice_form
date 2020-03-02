@@ -1,11 +1,12 @@
-var express = require('express')
+var express = require('express');
 var bodyParser = require('body-parser');
-var sendData = require('./sendData.js')
-var fetchNews = require('./fetchNews.js')
+var sendData = require('./sendData.js');
+var fetchNews = require('./fetchNews.js');
+var cloudinaryUpload = require ('./cloudinaryUpload.js');
 var util = require('util');
 var app = express();
 var cors = require('cors');
-var PORT = process.env.PORT || 3000
+var PORT = process.env.PORT || 3000;
 
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -40,6 +41,14 @@ app.post('/send', (req, res) => {
         res.status(200).send(transfer)
       }
       else res.status(400).send(transfer)
+      })
+    .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
+});
+
+app.post('/upload_image', (req, res) => {
+  cloudinaryUpload()
+    .then(data => {
+      res.status(200).send(data)
       })
     .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
 });
