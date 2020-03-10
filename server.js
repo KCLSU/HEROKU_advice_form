@@ -1,11 +1,14 @@
-var express = require('express')
+var express = require('express');
 var bodyParser = require('body-parser');
-var sendData = require('./sendData.js')
-var fetchNews = require('./fetchNews.js')
+var sendData = require('./sendData.js');
+var fetchNews = require('./fetchNews.js');
+var cloudinaryInt = require ('./cloudinaryInterface.js');
+var cloudinaryUpload = cloudinaryInt.cloudinaryUpload;
 var util = require('util');
 var app = express();
 var cors = require('cors');
-var PORT = process.env.PORT || 3000
+var PORT = process.env.PORT || 3000;
+var firebaseAuth = require('./firebaseAuth')
 
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -42,6 +45,30 @@ app.post('/send', (req, res) => {
       else res.status(400).send(transfer)
       })
     .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
+});
+
+app.post('/authenticate', (req, res) => {
+    firebaseAuth(req.body)
+    .then(data => res.status(200).send(data))
+    .catch(err => res.status(400).send(err))
+});
+
+app.post('/upload_image', (req, res) => {
+  let presets = req.body;
+  cloudinaryUpload(presets)
+    .then(data => cloudinaryInt.manipulateImage(data.public_id, presets))
+    .then(img => res.status(200).send({'image':img, 'status':'Success'}))
+    .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
+});
+
+app.post('/transform/:publicId', (req, res) => {
+  console.log('transform')
+  let data = req.body;
+  let id = req.params.publicId;
+  console.log(data)
+  cloudinaryInt.manipulateImage(id, data)
+    .then(img => res.status(200).send(img))
+    .catch(err => res.status(500).send({"error":err, "status": "Failed to transform image"}))
 });
 
 
