@@ -17,7 +17,7 @@ cloudinary.config({
 
   function manipulateImage(public_id, data){
       let preset = !data.preset? {} : presets[data.preset];
-      if (data.edit) preset = editPreset(preset);
+      if (data.edit) preset = editPreset(preset, data.edit);
       let promise =  new Promise(resolve => {
           let transform = cloudinary.url(public_id, { transformation: preset});
           resolve(transform)
@@ -25,8 +25,12 @@ cloudinary.config({
         return promise;
   }
 
-  function editPreset(preset){
-    console.log('Editing Preset...')
+  function editPreset(pres, adjust){
+    let preset = {...pres}
+    if (adjust.direction) preset.gravity = adjust.direction;
+    if (adjust.width) preset.width = adjust.width;
+    if (adjust.height) preset.height = adjust.height;
+    return preset;
   }
 
   module.exports = {
