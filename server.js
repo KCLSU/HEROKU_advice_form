@@ -54,19 +54,17 @@ app.post('/authenticate', (req, res) => {
 });
 
 app.post('/upload_image', (req, res) => {
-  let presets = req.body;
+  let presets = req.body.presets;
   cloudinaryUpload(presets)
     .then(data => cloudinaryInt.manipulateImage(data.public_id, presets))
     .then(img => res.status(200).send({'image':img, 'status':'Success'}))
     .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
 });
 
-app.post('/transform/:publicId', (req, res) => {
-  console.log('transform')
-  let data = req.body;
-  let id = req.params.publicId;
-  console.log(data)
-  cloudinaryInt.manipulateImage(id, data)
+app.post('/transform', (req, res) => {
+  let transformations = req.body.transformations;
+  let id = req.body.publicId;
+  cloudinaryInt.manipulateImage(id, transformations)
     .then(img => res.status(200).send(img))
     .catch(err => res.status(500).send({"error":err, "status": "Failed to transform image"}))
 });
