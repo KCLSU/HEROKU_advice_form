@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var sendData = require('./sendData.js');
+var submitAdvicePro = require('./submitAdvicePro.js');
 var fetchNews = require('./fetchNews.js');
 var cloudinaryInt = require ('./cloudinaryInterface.js');
 var cloudinaryUpload = cloudinaryInt.cloudinaryUpload;
@@ -9,6 +9,7 @@ var app = express();
 var cors = require('cors');
 var PORT = process.env.PORT || 3000;
 var firebaseAuth = require('./firebaseAuth')
+var fetch = require('node-fetch')
 
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -35,16 +36,22 @@ app.get('/newslist/:id', (req, res) => {
   .catch(err => {res.status(500).send({"error":err, "status": "Failed"})})
 })
 
-app.post('/send', (req, res) => {
-  let data = req.body;
-  let transfer = sendData(data)
+app.post('/submitAdvicePro', (req, res) => {
+  let data = req.body.advicepro;
+  let id = req.body.submissionId;
+  let log_url = `https://kclsu-advice.firebaseio.com/submissions/${id}.json`
+  submitAdvicePro(data)
     .then(transfer => {
       if (transfer.status === 'Submitted'){
         res.status(200).send(transfer)
       }
       else res.status(400).send(transfer)
-      })
-    .catch(err => res.status(500).send({"error":err, "status": "Failed"}))
+      fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: transfer})})
+    })
+    .catch(err => {
+      res.status(500).send({"error":err, "status": "Failed"})
+      fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: 'Failed', error: err})})
+    })
 });
 
 app.post('/authenticate', (req, res) => {  
@@ -73,3 +80,4 @@ app.post('/transform', (req, res) => {
 app.listen(PORT, () => {
   console.log("The server is running and listening on port " + PORT)
 });
+
