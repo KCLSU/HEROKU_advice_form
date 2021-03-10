@@ -5,9 +5,13 @@ var HttpsProxyAgent = require('https-proxy-agent');
 
 function submitAdvicePro(str){
 
-  str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
-  str.AgencyAPIKey = process.env.ADVICE_PRO_API;
-  url = process.env.ADVICE_PRO_URL;
+  // str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
+  // str.AgencyAPIKey = process.env.ADVICE_PRO_API;
+  // url = process.env.ADVICE_PRO_URL;
+  console.log('------')
+  console.log('data sent to function')
+  console.log(str)
+  console.log('------')
 
   let postData = {};
       postData.method = 'POST';
@@ -16,7 +20,7 @@ function submitAdvicePro(str){
       'Content-Type': 'application/json'
     }
 
-  postData.agent = new HttpsProxyAgent(process.env.FIXIE_URL);
+  // postData.agent = new HttpsProxyAgent(process.env.FIXIE_URL);
 
   return fetch(url, postData)
             .then(res => res.json())
