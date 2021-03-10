@@ -7,11 +7,15 @@ var cloudinaryUpload = cloudinaryInt.cloudinaryUpload;
 var util = require('util');
 var app = express();
 var cors = require('cors');
+const expressValidator = require('express-validator')
 var PORT = process.env.PORT || 4000;
 var firebaseAuth = require('./authentication/firebaseAuth');
 var fetch = require('node-fetch');var multer  = require('multer');
 var multer  = require('multer');
 const fs = require('fs');
+
+const { validationResult } = require('express-validator/check');
+const {validate} = require('./utils/validation');
 
 const fileStorage= multer.diskStorage({
   destination: (req, file, cb) => {
@@ -50,22 +54,34 @@ app.get('/newslist/:id', (req, res) => {
   .catch(err => {res.status(500).send({"error":err, "status": "Failed"})})
 })
 
-app.post('/submitAdvicePro', (req, res) => {
+app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
   let data = req.body.advicepro;
   let id = req.body.submissionId;
   let log_url = `https://kclsu-advice.firebaseio.com/submissions/${id}.json`
-  submitAdvicePro(data)
-    .then(transfer => {
-      if (transfer.status === 'Submitted'){
-        res.status(200).send(transfer)
-      }
-      else res.status(400).send(transfer)
-      fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: transfer})})
-    })
-    .catch(err => {
+
+  try {
+    const errors = validationResult(req);
+    console.log(errors)
+
+    if (!errors.isEmpty()) {
+      console.log(errors)
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+  
+    submitAdvicePro(data)
+      .then(transfer => {
+        if (transfer.status === 'Submitted'){
+          res.status(200).send(transfer)
+        }
+        else res.status(400).send(transfer)
+        fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: transfer})})
+      })
+
+  } catch(err){
       res.status(500).send({"error":err, "status": "Failed"})
       fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: 'Failed', error: err})})
-    })
+  }
 });
 
 app.post('/authenticate', (req, res) => {  
