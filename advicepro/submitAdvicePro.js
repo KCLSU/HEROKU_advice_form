@@ -12,10 +12,6 @@ function submitAdvicePro(str){
   str.SourcePhoneNumber = "020 7848 1588";
   str.SourceUserFullName = "KCLSU website";
   // url = process.env.ADVICE_PRO_URL;
-  console.log('------')
-  console.log('data sent to function')
-  console.log(str)
-  console.log('------')
 
   let postData = {};
       postData.method = 'POST';
@@ -43,9 +39,6 @@ function submitAdvicePro(str){
                 responseObject.advicepromessage = res;
               }
               return responseObject;
-            })
-            .catch(err => {
-              return {status: "Failed", error: err}
             })
 }
 

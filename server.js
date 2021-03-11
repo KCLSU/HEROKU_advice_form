@@ -15,7 +15,8 @@ var multer  = require('multer');
 const fs = require('fs');
 
 const { validationResult } = require('express-validator/check');
-const {validate} = require('./utils/validation');
+const {validate} = require('./advicepro/validation');
+const preventDuplicates = require('./advicepro/preventDuplicates');
 
 const fileStorage= multer.diskStorage({
   destination: (req, file, cb) => {
@@ -57,31 +58,31 @@ app.get('/newslist/:id', (req, res) => {
 app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
   let data = req.body.advicepro;
   let id = req.body.submissionId;
-  let log_url = `https://kclsu-advice.firebaseio.com/submissions/${id}.json`
+  let log_url = `https://kclsu-advice.firebaseio.com/submissions/${id}.json`;
 
-  try {
+
     const errors = validationResult(req);
-    console.log(errors)
 
     if (!errors.isEmpty()) {
-      console.log(errors)
-      res.status(422).json({ errors: errors.array() });
+      res.status(422).json({ error: true, errors: errors.array() });
       return;
     }
-  
-    submitAdvicePro(data)
-      .then(transfer => {
+    preventDuplicates(id)
+    .then( () => submitAdvicePro(data))
+    .then(transfer => {
         if (transfer.status === 'Submitted'){
-          res.status(200).send(transfer)
+          res.status(200).send({status: transfer.status, error: false});
+          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: false, message: transfer.status.messages[0]})})
         }
-        else res.status(400).send(transfer)
-        fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: transfer})})
+        else {
+          res.status(400).send({"status": transfer.status, "error": true, transfer});
+          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: true})})
+        } 
       })
-
-  } catch(err){
-      res.status(500).send({"error":err, "status": "Failed"})
-      fetch(log_url, {method: 'PATCH', body: JSON.stringify({result: 'Failed', error: err})})
-  }
+      .catch(err => {
+        res.status(500).send({error: true, "status": "Failed", er: err})
+        fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: err.message})})
+      })
 });
 
 app.post('/authenticate', (req, res) => {  
