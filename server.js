@@ -69,7 +69,6 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     deviceVendor: ua.device.vendor || '',
     ua: ua.ua
   };
-  console.log(useragent)
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {

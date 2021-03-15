@@ -5,13 +5,13 @@ var HttpsProxyAgent = require('https-proxy-agent');
 
 function submitAdvicePro(str){
 
-  // str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
-  // str.AgencyAPIKey = process.env.ADVICE_PRO_API;
+  str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
+  str.AgencyAPIKey = process.env.ADVICE_PRO_API;
   str.SourceAgencyName = "KCLSU Advice";
   str.SourceContactEmail = "help@kclsu.org";
   str.SourcePhoneNumber = "020 7848 1588";
   str.SourceUserFullName = "KCLSU website";
-  // url = process.env.ADVICE_PRO_URL;
+  url = process.env.ADVICE_PRO_URL;
 
   let postData = {};
       postData.method = 'POST';
@@ -20,7 +20,7 @@ function submitAdvicePro(str){
       'Content-Type': 'application/json'
     }
 
-  // postData.agent = new HttpsProxyAgent(process.env.FIXIE_URL);
+  postData.agent = new HttpsProxyAgent(process.env.FIXIE_URL);
 
   return fetch(url, postData)
             .then(res => res.json())
