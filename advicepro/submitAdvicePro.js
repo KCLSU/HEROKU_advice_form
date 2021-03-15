@@ -11,7 +11,7 @@ function submitAdvicePro(str){
   str.SourceContactEmail = "help@kclsu.org";
   str.SourcePhoneNumber = "020 7848 1588";
   str.SourceUserFullName = "KCLSU website";
-  // url = process.env.ADVICE_PRO_URL;
+  url = process.env.ADVICE_PRO_URL;
 
   let postData = {};
       postData.method = 'POST';
