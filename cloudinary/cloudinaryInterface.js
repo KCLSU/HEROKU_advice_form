@@ -8,11 +8,27 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET
   });
 
+
   function cloudinaryUpload(data){
-        return cloudinary.uploader.upload(data.imageRef, { folder: "website_uploads/", public_id: 'kings6'}, (error, result) => { 
-        if (error) console.log('Error: ', error)
-        return result
-    });
+    let promise =  new Promise(resolve => {
+      const name = data.originalname;
+      let result = cloudinary.uploader.upload(
+          data.path, 
+          {  
+            folder: "website_uploads/", 
+            public_id: name.replace(/\..*/, ''),
+            resource_type: 'auto',
+            allowed_formats: ['png', 'jpg', 'pdf', 'doc', 'docx', 'csv', 'xlsx', 'pptx'],
+            raw_convert: 'aspose'
+          }, 
+          (error, result) => { 
+              if (error) console.log('Error: ', error)
+              return result
+      });
+      resolve(result)
+    })
+    return promise;
+      
   }
 
   function manipulateImage(public_id, data){

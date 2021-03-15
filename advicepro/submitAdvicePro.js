@@ -7,6 +7,10 @@ function submitAdvicePro(str){
 
   str.ContractKey = process.env.ADVICE_PRO_CONTRACT;
   str.AgencyAPIKey = process.env.ADVICE_PRO_API;
+  str.SourceAgencyName = "KCLSU Advice";
+  str.SourceContactEmail = "help@kclsu.org";
+  str.SourcePhoneNumber = "020 7848 1588";
+  str.SourceUserFullName = "KCLSU website";
   url = process.env.ADVICE_PRO_URL;
 
   let postData = {};
@@ -35,9 +39,6 @@ function submitAdvicePro(str){
                 responseObject.advicepromessage = res;
               }
               return responseObject;
-            })
-            .catch(err => {
-              return {status: "Failed", error: err}
             })
 }
 
