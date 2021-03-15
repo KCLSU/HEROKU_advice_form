@@ -77,7 +77,6 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     }
     preventDuplicates()
     .then(duplicateExists => {
-      console.log(duplicateExists)
       if(duplicateExists){
         throw new Error('Previous submission made within last 10 seconds. Try again later.');
       } 
@@ -86,7 +85,7 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     .then(transfer => {
         if (transfer.status === 'Submitted'){
           res.status(200).send({status: transfer.status, error: false, "message": "Form successfully submitted"});
-          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: false, message: transfer.status.messages[0], ...useragent})})
+          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: false, message: 'Submitted To Advice Pro', ...useragent})})
         }
         else {
           const message = "Form unsuccessfully submitted - error unknown";
