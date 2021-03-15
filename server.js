@@ -77,6 +77,7 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     }
     preventDuplicates()
     .then(duplicateExists => {
+      console.log(duplicateExists)
       if(duplicateExists){
         throw new Error('Previous submission made within last 10 seconds. Try again later.');
       } 
