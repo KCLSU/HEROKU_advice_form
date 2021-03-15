@@ -19,9 +19,7 @@ function preventDuplicates(id){
                 if ((today.getTime() - lastSubmission.getTime())/1000 <= maxPeriod){
                     duplicateFound = true;
                 }
-
-                return duplicateFound;
-                // console.log((new Date(res.date).getTime()) / 1000)
+               return duplicateFound;
             })
   }
   
