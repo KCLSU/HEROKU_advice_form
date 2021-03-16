@@ -62,7 +62,7 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
   
   //get user agent details
   var ua = parser(req.headers['user-agent']);
-  const useragent = {
+  const user = {
     browser: ua.browser.name || '',
     browserversion: ua.browser.version || '',
     device: ua.device.type || '',
@@ -73,8 +73,13 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ error: true, message: "Error in form inputs", invalids: errors.array() });
+      fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: 'Error in form inputs - server validation', ...user})})
       return;
     }
+
+    //Attach last name to data
+    user.lastname = data.Surname;
+
     preventDuplicates()
     .then(duplicateExists => {
       if(duplicateExists){
@@ -85,17 +90,17 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     .then(transfer => {
         if (transfer.status === 'Submitted'){
           res.status(200).send({status: transfer.status, error: false, "message": "Form successfully submitted"});
-          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: false, message: 'Submitted To Advice Pro', ...useragent})})
+          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: false, message: 'Submitted To Advice Pro', ...user})})
         }
         else {
           const message = "Form unsuccessfully submitted - error unknown";
           res.status(400).send({"status": transfer.status, "error": true, transfer, "message": message});
-          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: true, message, ...useragent})})
+          fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: transfer.status, error: true, message, ...user})})
         } 
       })
       .catch(err => {
         res.status(500).send({error: true, "status": "Failed", message: err.message})
-        fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: err.message, 'user': '', ...useragent})})
+        fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: err.message, 'user': '', ...user})})
       })
 });
 
