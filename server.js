@@ -78,7 +78,7 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     }
 
     //Attach last name to data
-    user.lastname = data.Forename;
+    user.lastname = data.Surname;
 
     preventDuplicates()
     .then(duplicateExists => {
