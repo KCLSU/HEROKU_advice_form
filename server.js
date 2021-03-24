@@ -69,17 +69,16 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     deviceVendor: ua.device.vendor || '',
     ua: ua.ua
   };
-    const errors = validationResult(req);
+  //Attach last name to data
+  user.lastname = data.Surname;
+  const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      const errorMessage = errors.array().reduce((acc, val) => acc.concat(val.param).concat(', '), '');
-      res.status(422).json({ error: true, message: `Error in form inputs - server validation: ${errorMessage}`, invalids: errors.array() });
-      fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: `Error in form inputs - server validation: ${errorMessage}`, ...user})})
-      return;
-    }
-
-    //Attach last name to data
-    user.lastname = data.Surname;
+  if (!errors.isEmpty()) {
+    const errorMessage = errors.array().reduce((acc, val) => acc.concat(val.param).concat(', '), '');
+    res.status(422).json({ error: true, message: `Error in form inputs - server validation: ${errorMessage}`, invalids: errors.array() });
+    fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: `Error in form inputs - server validation: ${errorMessage}`, ...user})})
+    return;
+  }
 
     preventDuplicates()
     .then(duplicateExists => {
