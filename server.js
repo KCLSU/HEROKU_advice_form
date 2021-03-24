@@ -72,8 +72,9 @@ app.post('/submitAdvicePro', validate('adviceprosubmission'), (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.status(422).json({ error: true, message: "Error in form inputs", invalids: errors.array() });
-      fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: 'Error in form inputs - server validation', ...user})})
+      const errorMessage = errors.array().reduce((acc, val) => acc.concat(val.param).concat(', '), '');
+      res.status(422).json({ error: true, message: `Error in form inputs - server validation: ${errorMessage}`, invalids: errors.array() });
+      fetch(log_url, {method: 'PATCH', body: JSON.stringify({status: 'Failed', error: true, message: `Error in form inputs - server validation: ${errorMessage}`, ...user})})
       return;
     }
 

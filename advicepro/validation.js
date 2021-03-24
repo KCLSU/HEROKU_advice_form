@@ -4,12 +4,11 @@ exports.validate = () => {
   return [ 
     body("advicepro.Forename", "Enter a valid first name").notEmpty().isString().escape(),
     body('advicepro.Surname',  "Enter a valid surname").notEmpty().isString().escape(),
-    body('advicepro.EmailAddress', 'Invalid email').exists().isEmail().normalizeEmail(),
-    body('advicepro.Ethnicity', 'Technical error, please contact support').optional().isString().escape(),
-    body('advicepro.Gender', 'Technical error, please contact support').optional().escape(),
-    body('advicepro.HasDisability', 'Technical error, please contact support').optional().toBoolean(),
-    body('advicepro.MobileTelephoneNumber').optional().isMobilePhone(),
-    body('advicepro.Notes', 'Technical error, please contact support').notEmpty(),
+    body('advicepro.EmailAddress', 'Invalid email').notEmpty().isEmail(),
+    body('advicepro.Ethnicity', 'The Ethnicity field is invalid. Technical error, please contact help@kclsu.org').optional().isString().escape(),
+    body('advicepro.Gender', 'The Gender field is invalid. Technical error, please contact help@kclsu.org').optional().escape(),
+    body('advicepro.HasDisability', 'The Disability input has an incorrect value. Technical error, please contact help@kclsu.org').optional().toBoolean(),
+    body('advicepro.Notes', 'The Notes field is invalid. Technical error, please contact help@kclsu.org').notEmpty(),
     body('submissionId').isString()
     ]   
 }
