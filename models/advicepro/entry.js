@@ -1,4 +1,4 @@
-
+const parser = require('ua-parser-js');
 
 class Entry {
 
@@ -9,7 +9,7 @@ class Entry {
         this.package = this.createPackage(data)
     }
 
-    createPackage(){
+    createPackage(data){
         return {
             ...this.getUserAgent(),
             ...data

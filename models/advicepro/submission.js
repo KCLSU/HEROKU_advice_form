@@ -1,22 +1,25 @@
 var configs = require('../../utils/configs');
-var fetch = require('node-fetch')
-require('dotenv').config();
+var fetch = require('node-fetch');
 var HttpsProxyAgent = require('https-proxy-agent');
 var FIXIE_URL = require('../../utils/stringVals').FIXIE_URL;
 var ADVICE_PRO_URL = require('../../utils/stringVals').ADVICE_PRO_URL;
+
+const { ADVICEPRO_RECORDS_DATABASE_URL } = require('../../utils/stringVals');
+const { logError } = require('../../utils/logError');
 
 
 
 class AdviceproSubmission {
 
-    constructor(data){
+    constructor(data, userAgent){
+      this.data = data;
+      this.userAgent = userAgent;
       this.response = {};
-      this.submit(data);
     }
 
-    submit(data){
+    submit(){
         const adviceproConfig = configs.advicepro;
-        const package = {...data, ...adviceproConfig}
+        const package = {...this.data, ...adviceproConfig}
         let postData = {};
             postData.method = 'POST';
             postData.body = JSON.stringify(package);
@@ -29,29 +32,34 @@ class AdviceproSubmission {
         return fetch(ADVICE_PRO_URL, postData)
                   .then(response => response.json())
                   .then(res => {
-                    if (res.Messages && res.Messages[0] === 'Okay'){
+                    //CHECK GOOGLE STATUS CODE
+                    if (res.HttpStatusCode && +res.HttpStatusCode >=200 && +res.HttpStatusCode < 204){
                       this.createResponse(true, 'Form successfully submitted')
-                    } else if (res.HttpStatusCode && +res.HttpStatusCode >200 && +res.HttpStatusCode < 204){
-                      this.createResponse(true, 'Form successfully submitted')
-                    } else if (res.Message){
-                      this.createResponse(false, res.Message)
                     } else {
-                      this.createResponse(false, 'Unknown Error')
+                      const message = res.Message || 'Advice Pro Response contained no message'
+                      this.createResponse(false, message )
+                      logError({message}, this.userAgent);
                     }
                   })
+                  
+    }
+
+    updateRecord(id){
+      const logObject = this.createRecordObject();
+      const url = `${ADVICEPRO_RECORDS_DATABASE_URL}${id}.json`;
+
+      console.log(' ---- updateRecord ---- log object ')
+      console.log(logObject);
+
+      fetch(url, {method: 'PATCH', body: JSON.stringify(logObject)})
     }
 
 
-    createLogObject(userAgent){
+    createRecordObject(){
       return {
         ...this.response, 
-        ...userAgent
+        ...this.userAgent
       }
-    }
-
-    updateLog(userAgent){
-      const logObject = this.createLogObject(userAgent);
-      fetch(log_url, {method: 'PATCH', body: JSON.stringify(logObject)})
     }
 
     createResponse(successful, message){
@@ -59,6 +67,9 @@ class AdviceproSubmission {
       result.status = successful ? 'Submitted' : 'Failed';
       result.error = !successful;
       result.message = message;
+
+      console.log(' ---- createResponse---- log object ')
+      console.log(result);
     }
 }
 
