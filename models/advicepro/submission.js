@@ -19,10 +19,10 @@ class AdviceproSubmission {
 
     submit(){
         const adviceproConfig = configs.advicepro;
-        const package = {...this.data, ...adviceproConfig}
+        const packagedData = {...this.data, ...adviceproConfig}
         let postData = {};
             postData.method = 'POST';
-            postData.body = JSON.stringify(package);
+            postData.body = JSON.stringify(packagedData);
             postData.headers = {
             'Content-Type': 'application/json'
           }
