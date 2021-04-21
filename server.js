@@ -2,17 +2,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var allRoutes = require('./routes/routes');
 var configs = require('./utils/configs');
-var fetchNews = require('./models/old/msl/fetchNews.js');
-var cloudinaryInt = require ('./models/old/cloudinary/cloudinaryInterface.js');
-var cloudinaryUpload = cloudinaryInt.cloudinaryUpload;
 var app = express();
 var cors = require('cors');
 var PORT = process.env.PORT || 4000;
-var firebaseAuth = require('./models/old/authentication/firebaseAuth');
 var multer  = require('multer');
 
-const { validationResult } = require('express-validator/check');
-const {validate} = require('./models/old/advicepro/validation');
+// const { validationResult } = require('express-validator/check');
+// const {validate} = require('./models/old/advicepro/validation');
 
 
 app.use(bodyParser.json()); // for parsing application/json
