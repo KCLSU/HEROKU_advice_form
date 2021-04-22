@@ -15,7 +15,4 @@ exports.fetch = (endpoint, body, method = 'GET', headers = {}) => {
             .then(response => {
                 return response.json();
             })
-            .catch(err => {
-                return {status: "Failed", error: err}
-            })
 }
