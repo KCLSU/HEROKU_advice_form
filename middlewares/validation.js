@@ -1,21 +1,4 @@
-const { body } = require('express-validator/check');
-const ValidationError = require('../models/errors/validation');
-
-
-exports.validate = (req, res, next) => {
-  // const errors = validationResult(req);
-  const errors = { isEmpty: () => false}; //TESTING ONLY
-
-  if (!errors.isEmpty()) {
-    const errorHandler = new ValidationError(errors.array());
-    res.status(422).json(errorHandler.createResponseObject());
-    errorHandler.updateLog()
-    return;
-  }
-  else next();
-}
-
-
+const { body } = require('express-validator');
 
 exports.validate = (area) => {
   switch(area){
