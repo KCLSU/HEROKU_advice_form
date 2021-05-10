@@ -1,26 +1,20 @@
 require('dotenv').config();
 var FIREBASE_URI = require('../../utils/stringVals').FIREBASE_URI;
-var fetch = require('../../utils/fetch');
+var ANONYMOUS_SIGNIN = require('../../utils/stringVals').ANONYMOUS_SIGNIN;
+var { fetch } = require('../../utils/fetch');
 
 
 
 class authHandler {
 
-    static generateString(){
-        return Math.random().toString(36).substr(2, 10);
-    }
-
     static getDatabaseEndpoint(area){
         return FIREBASE_URI + this.getDatabaseKey(area);
     }
 
-    static getFirebaseTokenWithArea(){
-      
+    static getFirebaseToken(){
+      return  fetch(ANONYMOUS_SIGNIN, { returnSecureToken: true }, 'POST')
     }
 
-    static getFirebaseTokenWithArea(area){
-
-    }
 
     static getDatabaseKey(area){
       let key;

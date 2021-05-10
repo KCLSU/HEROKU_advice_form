@@ -3,7 +3,8 @@ const ValidationError = require('../models/errors/validation');
 
 
 exports.validate = (req, res, next) => {
-  const errors = validationResult(req);
+  // const errors = validationResult(req);
+  const errors = { isEmpty: () => false}; //TESTING ONLY
 
   if (!errors.isEmpty()) {
     const errorHandler = new ValidationError(errors.array());

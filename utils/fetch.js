@@ -1,6 +1,8 @@
-var fetch = require('node-fetch')
+var nodeFetch = require('node-fetch');
+var HttpsProxyAgent = require('https-proxy-agent');
+var FIXIE_URL = require('./stringVals').FIXIE_URL;
 
-exports.fetch = (endpoint, body, method = 'GET', headers = {}) => {
+exports.fetch = (endpoint, body, method = 'GET', useProxie = false, headers = {}) => {
 
     let postData = {};
     postData.method = method;
@@ -8,10 +10,11 @@ exports.fetch = (endpoint, body, method = 'GET', headers = {}) => {
     postData.headers = {
         ...headers,
         'Content-Type': 'application/json'
-    }
+    };
+    if (useProxie)
+        postData.agent = new HttpsProxyAgent(FIXIE_URL);
 
-
-    return fetch(endpoint, postData)
+    return nodeFetch(endpoint, postData)
             .then(response => {
                 return response.json();
             })

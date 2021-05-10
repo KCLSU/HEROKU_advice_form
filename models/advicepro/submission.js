@@ -1,75 +1,55 @@
 var configs = require('../../utils/configs');
-var fetch = require('node-fetch');
-var HttpsProxyAgent = require('https-proxy-agent');
-var FIXIE_URL = require('../../utils/stringVals').FIXIE_URL;
-var ADVICE_PRO_URL = require('../../utils/stringVals').ADVICE_PRO_URL;
+var { fetch } = require('../../utils/fetch');
+var { ADVICE_PRO_URL, ADVICEPRO_RECORDS_DATABASE_URL } = require('../../utils/stringVals');
 
-const { ADVICEPRO_RECORDS_DATABASE_URL } = require('../../utils/stringVals');
-const { logError } = require('../../utils/logError');
 
 
 
 class AdviceproSubmission {
 
-    constructor(data, userAgent){
+    constructor(id, data){
+      this.id = id;
       this.data = data;
-      this.userAgent = userAgent;
       this.response = {};
     }
 
+    //SUBMIT TO THE ADVICE PR API
     submit(){
         const adviceproConfig = configs.advicepro;
-        const packagedData = {...this.data, ...adviceproConfig}
-        let postData = {};
-            postData.method = 'POST';
-            postData.body = JSON.stringify(packagedData);
-            postData.headers = {
-            'Content-Type': 'application/json'
-          }
+        const packagedData = { ...this.data, ...adviceproConfig };
       
-        postData.agent = new HttpsProxyAgent(FIXIE_URL);
-      
-        return fetch(ADVICE_PRO_URL, postData)
-                  .then(response => response.json())
-                  .then(res => {
+        return fetch(ADVICE_PRO_URL, packagedData, 'POST', true)//TESTING - SET TO TRUE
+                  .then(result => {
                     //CHECK GOOGLE STATUS CODE
-                    if (res.HttpStatusCode && +res.HttpStatusCode >=200 && +res.HttpStatusCode < 204){
+                    if (result.HttpStatusCode && +result.HttpStatusCode >=200 && +result.HttpStatusCode < 204){
                       this.createResponse(true, 'Form successfully submitted')
                     } else {
-                      const message = res.Message || 'Advice Pro Response contained no message'
-                      this.createResponse(false, message )
-                      logError({message}, this.userAgent);
+                        const message = result.Message || `Advice Pro Response contained no message.`
+                        this.createResponse(false, message)
+                        
+                        throw new Error(message);
                     }
                   })
                   
     }
 
-    updateRecord(id){
-      const logObject = this.createRecordObject();
-      const url = `${ADVICEPRO_RECORDS_DATABASE_URL}${id}.json`;
-
-      console.log(' ---- updateRecord ---- log object ')
-      console.log(logObject);
-
-      fetch(url, {method: 'PATCH', body: JSON.stringify(logObject)})
+    //UPDATE THE DATABASE RECORD OF THIS ENTRY
+    updateRecord(){
+      const logObject = {...this.response };
+      console.log('LOGOBJECT');
+      console.log(logObject)
+      const url = `${ADVICEPRO_RECORDS_DATABASE_URL}${this.id}.json`;
+      return fetch(url, logObject, 'PATCH');
     }
 
 
-    createRecordObject(){
-      return {
-        ...this.response, 
-        ...this.userAgent
-      }
-    }
-
+    //CREATE THE RESPONSE AFTER SUBMITING TO THE ADIVCE PRO API
     createResponse(successful, message){
       const result = this.response;
       result.status = successful ? 'Submitted' : 'Failed';
       result.error = !successful;
       result.message = message;
-
-      console.log(' ---- createResponse---- log object ')
-      console.log(result);
+      return result;
     }
 }
 

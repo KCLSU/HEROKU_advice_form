@@ -4,7 +4,7 @@ var controllers = require('../controllers');
 var { attachToRequest } = require('../middlewares/requestAddOns');
 var { approveUser } = require('../middlewares/approveUser');
 var { checkDuplicates } = require('../middlewares/checkDuplicates');
-const { validate } = require('../middlewares/validation');
+// const { validate } = require('../middlewares/validation');
 const { validateToken } = require('../middlewares/validateToken');
 const { createToken } = require('../middlewares/createToken');
 
@@ -16,7 +16,7 @@ router.get('/eventslist/:id', controllers.msl.fetchEvents);
 router.post('/submitAdvicePro', 
     attachToRequest, 
     checkDuplicates,
-    validate, 
+    // validate, 
     controllers.advicepro.submitToAdvicePro
 );
 
@@ -24,21 +24,24 @@ router.post('/upload_image', controllers.cloudinary.upload);
 
 router.post('/transform', controllers.cloudinary.transform);
 
-router.post('/authenticate',controllers.auth.authenticate);
+router.post('/authenticate',
+    attachToRequest,
+    validateToken,
+    controllers.auth.authenticate
+);
 
 router.get('/serverToken',
     attachToRequest,
     approveUser,
-    createToken,
+    createToken
 );
 
-// https://www.youtube.com/watch?v=0SARbwvhupQ
-// https://www.youtube.com/watch?v=vFOw_m5zNCs
 
-router.post('/firebaseToken', 
+//FOR ANONYNMOUS FIREBASE AUTH
+router.post('/signinanon', 
     attachToRequest,
     validateToken,
-    controllers.auth.firebaseAuth
+    controllers.auth.authanonymous
 );
 
 

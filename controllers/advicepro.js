@@ -1,12 +1,12 @@
 var AdviceProSubmission = require('../models/advicepro/submission');
-var Entry = require('../models/advicepro/entry');
-const { logError } = require('../utils/logError');;
+var { logError } = require('../utils/logError');;
 
 
 
 exports.submitToAdvicePro = async (req, res) => {
-    const entry = new Entry(req.body.submissionId, req.body.advicepro);
-    const submission = new AdviceProSubmission(entry.package, entry.getUserAgent());
+    const formId = req.body.submissionId;
+    const formData = req.body.advicepro;
+    const submission = new AdviceProSubmission(formId, formData);
     try {
 
         await submission.submit();
@@ -17,12 +17,25 @@ exports.submitToAdvicePro = async (req, res) => {
             res.status(400).send(submission.response);
         } 
 
-        submission.updateRecord(entry.id);
+        //UPDATE DATABASE RECORD OF SUBMISSION
+        submission.updateRecord();
         
     } catch(err) {
-        res.status(500).send(submission.response);
-        logError(err, '--- submitToAdvicePro --- catch block error', entry);
-        submission.updateRecord(entry.id);
+        const msg = err.message? err.message : 'Failed to submit to advicepro --- submitToAdvicePro --- catch block error';
+        res.status(500).send(submission.createResponse(false, msg));
+        
+        //UPDATE DATABASE RECORD OF SUBMISSION
+        submission.updateRecord();
+
+        //UPDATE DATABASE ERROR LOG
+        //WE COULD STORE ENTIRE FORM SUBMISSION? 
+        const storedData = {};
+        storedData.formId = formId;
+        storedData.lastname = formData.Surname;
+        storedData.email = formData.EmailAddress;
+
+        logError('advice', msg, req, storedData);
+        
     }
 
 }
