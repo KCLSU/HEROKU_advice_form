@@ -11,7 +11,7 @@ exports.ADVICE_PRO_URL = 'https://test-db-1577e.firebaseio.com/officers.json';
 // exports.ADVICEPRO_RECORDS_DATABASE_URL = 'https://kclsu-advice.firebaseio.com/submissions/';
 exports.ADVICEPRO_RECORDS_DATABASE_URL = 'https://test-db-1577e.firebaseio.com/mascots/';
 exports.FIREBASE_URI = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
-exports.ANONYMOUS_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBHDbcbNlqFDURFhQx1BF3VM7T7F5zDekE';
+exports.ANONYMOUS_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
 exports.LOG_URL = 'https://test-db-1577e.firebaseio.com/deals.json'
 
 
