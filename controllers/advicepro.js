@@ -1,3 +1,4 @@
+const { body } = require('express-validator');
 var AdviceProSubmission = require('../models/advicepro/submission');
 var { logError } = require('../utils/logError');;
 
