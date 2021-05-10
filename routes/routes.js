@@ -4,9 +4,10 @@ var controllers = require('../controllers');
 var { attachToRequest } = require('../middlewares/requestAddOns');
 var { approveUser } = require('../middlewares/approveUser');
 var { checkDuplicates } = require('../middlewares/checkDuplicates');
-// const { validate } = require('../middlewares/validation');
+const { validate } = require('../middlewares/validation');
 const { validateToken } = require('../middlewares/validateToken');
 const { createToken } = require('../middlewares/createToken');
+const { checkValid } = require('../middlewares/checkValid');
 
 
 router.get('/', (req, res) => { res.status(200).send("SUCCESS")});
@@ -16,7 +17,8 @@ router.get('/eventslist/:id', controllers.msl.fetchEvents);
 router.post('/submitAdvicePro', 
     attachToRequest, 
     checkDuplicates,
-    // validate, 
+    validate('advicepro'),
+    checkValid,
     controllers.advicepro.submitToAdvicePro
 );
 
