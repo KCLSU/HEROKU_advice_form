@@ -16,6 +16,7 @@ class authHandler {
     }
 
 
+
     static getDatabaseKey(area){
       let key;
       switch(area){
