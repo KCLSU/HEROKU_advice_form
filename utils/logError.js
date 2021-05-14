@@ -1,4 +1,4 @@
-var {fetch } = require('./fetch');
+var { fetch } = require('./fetch');
 var { LOG_URL } = require('./stringVals');
 var parser = require('ua-parser-js');
 //switch to axios
@@ -26,7 +26,8 @@ exports.logError = (area, message, request, data = {}) => {
         ip: request.ip,
         referer: request.get('Referer'),
         route: request.route.path,
-        method: request.method
+        method: request.method,
+        origin: request.get('Origin')
     };
 
     return fetch(LOG_URL, errorMsg, 'POST');

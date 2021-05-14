@@ -1,8 +1,8 @@
 
 exports.validateToken = (req, res, next) => {
     const existingTokens = req.serverTokens;
-    const userToken = req.get('Cookie');
-    const userIp = req.connection.remoteAddress;
+    const userToken = req.get('kclsutoken');
+    const userIp = req.ip;
     console.log({userToken, existingTokens, userIp})
 
     //CHECK TOKEN IS IN LIST OF RECENTLY CREATED TOKENS

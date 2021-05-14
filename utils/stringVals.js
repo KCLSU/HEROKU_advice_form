@@ -11,8 +11,8 @@ exports.CONTRACT_KEY = process.env.ADVICE_PRO_CONTRACT;
 exports.ADVICE_PRO_URL = developmentMode ? 'https://test-db-1577e.firebaseio.com/officers.json' : process.env.ADVICE_PRO_URL;
 exports.ADVICEPRO_RECORDS_DATABASE_URL = developmentMode ? 'https://test-db-1577e.firebaseio.com/mascots/' : process.env.ADVICEPRO_RECORDS_DATABASE_URL;
  
-exports.FIREBASE_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
-exports.ANONYMOUS_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
+exports.FIREBASE_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + process.env.FIREBASE_DATABASE_KEY;
+exports.ANONYMOUS_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' ;
 exports.LOG_URL = developmentMode ? 'https://test-db-1577e.firebaseio.com/deals.json' : 'https://test-db-1577e.firebaseio.com/deals.json'
 
 //CREDENTIALS FOR KCLSU FIREBASE REAL TIME DATABASE

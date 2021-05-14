@@ -1,6 +1,5 @@
 require('dotenv').config();
-var FIREBASE_URI = require('../../utils/stringVals').FIREBASE_URI;
-var ANONYMOUS_SIGNIN = require('../../utils/stringVals').ANONYMOUS_SIGNIN;
+const { ANONYMOUS_SIGNIN, FIREBASE_URI, FIREBASE_SIGNIN } = require('../../utils/stringVals')
 var { fetch } = require('../../utils/fetch');
 
 
@@ -16,12 +15,8 @@ class authHandler {
     }
 
     static getFirebaseTokenSigned(email, password){
-      const credentials = {​​​​​​​
-        email,
-        password,
-        returnSecureToken: true
-      }​​​​​​​;
-      return  fetch(ANONYMOUS_SIGNIN, credentials, 'POST')
+      const user = { email, password, returnSecureToken: true };
+      return fetch(FIREBASE_SIGNIN, user, 'POST')
     }
 
     //LEGACY CODE

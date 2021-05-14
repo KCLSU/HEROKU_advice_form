@@ -9,13 +9,17 @@ const { validateToken } = require('../middlewares/validateToken');
 const { createToken } = require('../middlewares/createToken');
 const { checkValid } = require('../middlewares/checkValid');
 
-//MSL
+// -- ROOT --
 
 router.get('/', (req, res) => { res.status(200).send("SUCCESS")});
+
+
+// -- MSL --
+
 router.get('/newslist/:id', controllers.msl.fetchNews);  
 router.get('/eventslist/:id', controllers.msl.fetchEvents);  
   
-//ADVICE 
+//-- ADVICE -- 
 
 router.post('/submitAdvicePro', 
     attachToRequest, 
@@ -25,13 +29,19 @@ router.post('/submitAdvicePro',
     controllers.advicepro.submitToAdvicePro
 );
 
-//CLOUDINARY
+//-- CLOUDINARY --
 
 router.post('/upload_image', controllers.cloudinary.upload);
-
 router.post('/transform', controllers.cloudinary.transform);
 
-//TOKENS AND AUTHENTICATION
+// -- TOKENS AND AUTHENTICATION --
+
+    //GENERATE A TOKEN AND ATTACH TO CLIENT HEADER
+router.get('/serverToken',
+    attachToRequest,
+    approveUser,
+    createToken
+);
 
 router.post('/authenticate', controllers.auth.authenticate);
 
@@ -41,14 +51,6 @@ router.post('/protectedauth',
     validateToken,
     controllers.auth.protectedauth
 );
-
-    //GENERATE A TOKEN AND ATTACH TO CLIENT HEADER
-router.get('/serverToken',
-    attachToRequest,
-    approveUser,
-    createToken
-);
-
 
     //FOR ANONYNMOUS FIREBASE AUTH
 router.post('/signinanon', 
