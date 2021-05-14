@@ -15,8 +15,16 @@ class authHandler {
       return  fetch(ANONYMOUS_SIGNIN, { returnSecureToken: true }, 'POST')
     }
 
+    static getFirebaseTokenSigned(email, password){
+      const credentials = {​​​​​​​
+        email,
+        password,
+        returnSecureToken: true
+      }​​​​​​​;
+      return  fetch(ANONYMOUS_SIGNIN, credentials, 'POST')
+    }
 
-
+    //LEGACY CODE
     static getDatabaseKey(area){
       let key;
       switch(area){
