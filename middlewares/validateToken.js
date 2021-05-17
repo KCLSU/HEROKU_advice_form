@@ -1,9 +1,9 @@
+const { errorResponse } = require("../utils/errorResponse");
 
 exports.validateToken = (req, res, next) => {
     const existingTokens = req.serverTokens;
     const userToken = req.get('kclsutoken');
     const userIp = req.ip;
-    console.log({userToken, existingTokens, userIp})
 
     //CHECK TOKEN IS IN LIST OF RECENTLY CREATED TOKENS
     //CHECK USER IP MATCHES IP IN TOKEN
@@ -12,8 +12,9 @@ exports.validateToken = (req, res, next) => {
        item.ip === userIp && item.token === userToken
     );
 
-    req.validToken = validToken;
-
-    next();
+    if(!validToken){
+        res.status(500).send(errorResponse('Error: Invalid token'))
+    }
+    else next();
 }
 

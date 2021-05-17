@@ -1,3 +1,4 @@
+const { errorResponse } = require("../utils/errorResponse");
 const { logError } = require("../utils/logError");
 
 exports.approveUser = (req, res, next) => {
@@ -9,9 +10,9 @@ exports.approveUser = (req, res, next) => {
     let validUser = validIp || 
         req.get('origin').includes('kclsu.org')
         && req.get('referer').includes('manager')
-        && req.secure;
+        
     if (!validUser){
-        res.status(400).send({mag: 'Invalid User', validUser, ref: req.referer, or: req.origin});
+        res.status(400).send(errorResponse('The user in invalid'));
         //UPDATE DATABASE ERROR LOG
         logError('Auth', 'User not valid',  req )
     }

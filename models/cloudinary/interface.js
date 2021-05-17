@@ -1,15 +1,12 @@
 var cloudinary = require('cloudinary').v2;
-const { cloudinaryConfig } = require('../../utils/configs');
+const configs = require('../../utils/configs');
 var presets = require('./presets.js');
 require('dotenv').config();
-
-//SEND CLOUDINARY CONFIG
-cloudinary.config(cloudinaryConfig);
 
 
 class cloudinaryInterface {
     constructor(){
-        cloudinaryInstance = cloudinary.config(cloudinaryConfig);
+        cloudinaryInstance = cloudinary.config(configs.cloudinary);
     }
 
     upload(data){
