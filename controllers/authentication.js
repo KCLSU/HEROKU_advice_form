@@ -8,12 +8,13 @@ exports.authenticate = (req, res) => {
     authHandler.getFirebaseTokenSigned(email, password)
         .then(data => {
             if (data.error){
+                res.status(400).send(errorResponse(data.error.message,{ error: data.error}));
                 logError(AUTH, data.error.message, req, {error: data.error})
             }
-            res.status(200).send(data)
+            else res.status(200).send(data)
         })
         .catch(err => {
-            res.status(400).send(err);
+            res.status(400).send(errorResponse('Firebase Auth denied', { error: err }));
             //UPDATE DATABASE ERROR LOG
             logError(AUTH, 'Failed to retrieve Firebase Token from signed auth - catch statement', req, { err })
         });
@@ -22,8 +23,11 @@ exports.authenticate = (req, res) => {
 exports.protectedauth = (req, res) => {
     authHandler.getFirebaseTokenSigned(FIREBASE_EMAIL, FIRABASE_PWD)
         .then(data => {
-            res.status(400).send(errorResponse('Failed to retrieve Firebase Token from signed auth',{ error: data.error}));
-            logError(AUTH, data.error.message, req, {error: data.error})
+            if (data.error){
+                res.status(400).send(errorResponse('Failed to retrieve Firebase Token from signed auth',{ error: data.error}));
+                logError(AUTH, data.error.message, req, {error: data.error})
+            }
+            else res.status(200).send(data)
         })
         .catch(err => {
             res.status(400).send(errorResponse('Protected Auth denied', { error: err }));
