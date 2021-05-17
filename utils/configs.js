@@ -1,16 +1,4 @@
-var multer  = require('multer');
 var stringVals = require('./stringVals');
-
-exports.multer = () => {
-    return multer.diskStorage({
-        destination: (req, file, cb) => {
-          cb(null, 'images')
-        },
-        filename: (req, file, cb) => {
-          cb(null, file.originalname)
-        }
-      })
-}
 
 exports.cloudinaryConfig(() => {
     return { 
