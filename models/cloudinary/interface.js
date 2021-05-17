@@ -33,7 +33,7 @@ class cloudinaryInterface {
         return promise;
     }
 
-    manipulateImage(public_id, data){
+    transform(public_id, data){
         let preset = !data.preset? {} : presets[data.preset];
         if (data.edit) preset = this.editPreset(preset, data.edit);
         let promise =  new Promise(resolve => {
