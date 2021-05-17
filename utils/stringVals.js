@@ -20,6 +20,10 @@ exports.FIREBASE_PWD = 'something'
 exports.FIREBASE_EMAIL = 'something@something.com'
 
 
+//CLOUDINARY CREDENTIALS
+exports.CLOUDINARY_KEY =  process.env.CLOUDINARY_KEY;
+exports.CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET;
+
 //ERROR AREA NAMES
 exports.AUTH = 'auth';
 exports.ADVICE = 'advice';

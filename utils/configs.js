@@ -12,6 +12,14 @@ exports.multer = () => {
       })
 }
 
+exports.cloudinaryConfig(() => {
+    return { 
+      cloud_name: 'kclsu-media', 
+      api_key: process.env.CLOUDINARY_KEY, 
+      api_secret: process.env.CLOUDINARY_SECRET
+    }
+});
+
 exports.advicepro = () => {
     return {
       ContractKey: stringVals.ADVICE_PRO_CONTRACT,

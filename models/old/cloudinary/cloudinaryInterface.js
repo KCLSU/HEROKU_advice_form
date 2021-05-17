@@ -1,12 +1,12 @@
 var cloudinary = require('cloudinary').v2;
-var presets = require('./cloudinaryPresets.js');
+var presets = require('../../cloudinary/presets.js');
 require('dotenv').config();
 
 cloudinary.config({ 
-    cloud_name: 'kclsu-media', 
-    api_key: process.env.CLOUDINARY_KEY, 
-    api_secret: process.env.CLOUDINARY_SECRET
-  });
+  cloud_name: 'kclsu-media', 
+  api_key: process.env.CLOUDINARY_KEY, 
+  api_secret: process.env.CLOUDINARY_SECRET
+});
 
 
   function cloudinaryUpload(data){
