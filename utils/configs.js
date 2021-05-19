@@ -3,8 +3,8 @@ var stringVals = require('./stringVals');
 exports.cloudinary = () => {
     return { 
       cloud_name: 'kclsu-media', 
-      api_key: process.env.CLOUDINARY_KEY, 
-      api_secret: process.env.CLOUDINARY_SECRET
+      api_key: stringVals.CLOUDINARY_KEY, 
+      api_secret: stringVals.CLOUDINARY_SECRET
     }
 };
 

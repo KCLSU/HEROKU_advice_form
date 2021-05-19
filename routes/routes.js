@@ -31,7 +31,7 @@ router.post('/submitAdvicePro',
 
 //-- CLOUDINARY --
 
-router.post('/upload_image', controllers.cloudinary.upload);
+router.post('/upload', controllers.cloudinary.upload);
 router.post('/transform', controllers.cloudinary.transform);
 
 // -- TOKENS AND AUTHENTICATION --

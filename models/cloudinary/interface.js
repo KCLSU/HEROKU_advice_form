@@ -1,17 +1,14 @@
 var cloudinary = require('cloudinary').v2;
 const configs = require('../../utils/configs');
 var presets = require('./presets.js');
-
+cloudinary.config(configs.cloudinary());
 
 class cloudinaryInterface {
-    constructor(){
-        cloudinaryInstance = cloudinary.config(configs.cloudinary);
-    }
-
+ 
     upload(data){
-        let promise =  new Promise(resolve => {
+        let promise =  new Promise((resolve, reject) => {
             const name = data.originalname;
-            let result = this.cloudinaryInstance.uploader.upload(
+            let result = cloudinary.uploader.upload(
                 data.path, 
                 {  
                   folder: "website_uploads/", 
@@ -20,13 +17,14 @@ class cloudinaryInterface {
                   allowed_formats: ['png', 'jpg', 'pdf', 'doc', 'docx', 'csv', 'xlsx', 'pptx'],
                   raw_convert: 'aspose'
                 }, 
-                (error, result) => { 
-                    if (error) {
-                       throw new Error(error)
-                    }
-                    return result
+                function(error, result){ 
+                   if (error) {
+                       reject(error)
+                   }
+                return result
             });
-            resolve(result)
+            resolve(result);
+
         })
         return promise;
     }
@@ -35,7 +33,7 @@ class cloudinaryInterface {
         let preset = !data.preset? {} : presets[data.preset];
         if (data.edit) preset = this.editPreset(preset, data.edit);
         let promise =  new Promise(resolve => {
-            let transform = this.cloudinaryInstance.url(public_id, { transformation: preset});
+            let transform = cloudinary.url(public_id, { transformation: preset});
             resolve(transform)
         })
         return promise;

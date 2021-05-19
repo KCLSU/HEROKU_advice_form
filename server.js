@@ -6,17 +6,14 @@ var cors = require('cors');
 var multer  = require('multer');
 var PORT = require('./utils/stringVals').PORT;
 
-const imageStorage = () => {
-  return multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, 'images')
-      },
-      filename: (req, file, cb) => {
-        cb(null, file.originalname)
-      }
-    })
-}
-
+const imageStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+});
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(multer({ storage: imageStorage }).single('file_upload'));
