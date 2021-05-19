@@ -29,8 +29,8 @@ exports.CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET;
 
 
 //MSL ENDPOINTS
-exports.MSL_NEWS = '';
-exports.MSL_EVENTS = '';
+exports.MSL_NEWS = 'https://kclsu.org/svc/feeds/news/';
+exports.MSL_EVENTS = 'https://kclsu.org/svc/feeds/events/';
 
 //ERROR AREA NAMES
 exports.AUTH = 'auth';

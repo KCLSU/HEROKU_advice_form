@@ -17,7 +17,7 @@ router.get('/', (req, res) => { res.status(200).send("SUCCESS")});
 // -- MSL --
 
 router.get('/newslist/:id', controllers.msl.fetchNews);  
-router.get('/eventslist/:id', controllers.msl.fetchEvents);  
+router.get('/eventslist/:id?', controllers.msl.fetchEvents);  
   
 //-- ADVICE -- 
 
