@@ -27,6 +27,11 @@ exports.FIREBASE_EMAIL = 'something@something.com'
 exports.CLOUDINARY_KEY =  process.env.CLOUDINARY_KEY;
 exports.CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET;
 
+
+//MSL ENDPOINTS
+exports.MSL_NEWS = '';
+exports.MSL_EVENTS = '';
+
 //ERROR AREA NAMES
 exports.AUTH = 'auth';
 exports.ADVICE = 'advice';
