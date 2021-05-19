@@ -1,4 +1,5 @@
 const { errorResponse } = require("../utils/errorResponse");
+const { logError } = require("../utils/logError");
 
 exports.validateToken = (req, res, next) => {
     const existingTokens = req.serverTokens;
@@ -13,7 +14,8 @@ exports.validateToken = (req, res, next) => {
     );
 
     if(!validToken){
-        res.status(500).send(errorResponse('Error: Invalid token'))
+        res.status(500).send(errorResponse('Error: Invalid token'));
+        logError('Token', 'Invalid Token supplied by client', req)
     }
     else next();
 }

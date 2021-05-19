@@ -13,8 +13,7 @@ exports.logError = (area, message, request, data = {}) => {
         browserversion: ua.browser.version || '',
         device: ua.device.type || '',
         deviceVendor: ua.device.vendor || '',
-        ua: ua.ua,
-        lastname: this.lastName 
+        ua: ua.ua
     };
     
     const errorMsg = {

@@ -1,7 +1,6 @@
 var cloudinary = require('cloudinary').v2;
 const configs = require('../../utils/configs');
 var presets = require('./presets.js');
-require('dotenv').config();
 
 
 class cloudinaryInterface {
@@ -22,7 +21,9 @@ class cloudinaryInterface {
                   raw_convert: 'aspose'
                 }, 
                 (error, result) => { 
-                    if (error) console.log('Error: ', error)
+                    if (error) {
+                       throw new Error(error)
+                    }
                     return result
             });
             resolve(result)

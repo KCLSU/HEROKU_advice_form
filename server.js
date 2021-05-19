@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 var allRoutes = require('./routes/routes');
 var app = express();
 var cors = require('cors');
-var PORT = process.env.PORT || 4000;
 var multer  = require('multer');
+var PORT = require('./utils/stringVals').PORT;
 
 const imageStorage = () => {
   return multer.diskStorage({

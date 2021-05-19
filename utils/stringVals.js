@@ -1,6 +1,10 @@
 require('dotenv').config();
 
-const developmentMode = process.env.PORT === 4000;
+var PORT = process.env.PORT || 4000;
+exports.PORT = PORT;
+
+const developmentMode = PORT === 4000;
+
 
 exports.AGENCY_NAME = "KCLSU Advice";
 exports.CONTACT_EMAIL = "help@kclsu.org";

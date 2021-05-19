@@ -3,8 +3,6 @@ var { fetch } = require('../../utils/fetch');
 var { ADVICE_PRO_URL, ADVICEPRO_RECORDS_DATABASE_URL } = require('../../utils/stringVals');
 
 
-
-
 class AdviceproSubmission {
 
     constructor(data){
@@ -19,7 +17,6 @@ class AdviceproSubmission {
     submit(){
         const adviceproConfig = configs.advicepro;
         const packagedData = { ...this.data, ...adviceproConfig };
-      
         return fetch(ADVICE_PRO_URL, packagedData, 'POST', true)
                   .then(result => {
                     //CHECK GOOGLE STATUS CODE
@@ -38,6 +35,7 @@ class AdviceproSubmission {
     createRecord(){
       const logObject = {...this.response };
       const url = `${ADVICEPRO_RECORDS_DATABASE_URL}.json`;
+      console.log('creating record')
       return fetch(url, logObject, 'POST')
               .then(data => {
                 this.submissionId = data.name;

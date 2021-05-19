@@ -1,7 +1,5 @@
 const { generateString } = require("../utils/randomString");
 
-
-
 exports.createToken = (req, res, next) => {
     const ip = req.ip;
     const newToken = {
