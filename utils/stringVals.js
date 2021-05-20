@@ -19,6 +19,7 @@ exports.ANONYMOUS_SIGNIN = 'https://identitytoolkit.googleapis.com/v1/accounts:s
 exports.LOG_URL = developmentMode ? 'https://test-db-1577e.firebaseio.com/deals.json' : 'https://test-db-1577e.firebaseio.com/deals.json'
 
 //CREDENTIALS FOR KCLSU FIREBASE REAL TIME DATABASE
+exports.FIREBASE_KEY = process.env.FIREBASE_KEY;
 exports.FIREBASE_PWD = 'something'
 exports.FIREBASE_EMAIL = 'something@something.com'
 

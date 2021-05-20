@@ -1,7 +1,7 @@
 const authHandler = require('../models/authentication/authhandler');
 const { errorResponse } = require('../utils/errorResponse');
 const { logError } = require('../utils/logError');
-const { AUTH, FIRABASE_PWD, FIREBASE_EMAIL } = require('../utils/stringVals');
+const { AUTH, FIRABASE_PWD, FIREBASE_EMAIL, FIREBASE_KEY } = require('../utils/stringVals');
 
 exports.authenticate = (req, res) => {
     const { email, password } = req.body.package;  
@@ -21,7 +21,9 @@ exports.authenticate = (req, res) => {
 }
 
 exports.protectedauth = (req, res) => {
-    authHandler.getFirebaseTokenSigned(FIREBASE_EMAIL, FIRABASE_PWD)
+    let providedKey = req.params.key;
+    if (providedKey === FIREBASE_KEY){
+        authHandler.getFirebaseTokenSigned(FIREBASE_EMAIL, FIRABASE_PWD)
         .then(data => {
             if (data.error){
                 res.status(400).send(errorResponse('Failed to retrieve Firebase Token from signed auth',{ error: data.error}));
@@ -34,6 +36,10 @@ exports.protectedauth = (req, res) => {
             //UPDATE DATABASE ERROR LOG
             logError(AUTH, 'Protected Auth denied, failed to get Firebase Token - catch statement', req, { error: err })
         });
+    } else {
+        res.status(400).send(errorResponse('Invalid key provided'));
+        logError(AUTH, 'Protected Auth denied, invalid firebase key provided', req)
+    }
 }
 
 

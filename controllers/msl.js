@@ -4,7 +4,7 @@ const { logError } = require("../utils/logError");
 const stringVals = require('../utils/stringVals');
 
 exports.fetchNews = (req, res) => {
-    let id = req.params.id;
+    const id = req.params.id;
     fetch(stringVals.MSL_NEWS + id)
     .then(result => {
         res.status(200).send(result)
