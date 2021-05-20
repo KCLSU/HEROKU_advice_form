@@ -12,7 +12,11 @@ test.json
 ./test2.json
 test2.json
 
+./kclsu-db1-firebase-adminsdk.json
 kclsu-db1-firebase-adminsdk.json
+
+./dbconfig.js
+dbconfig.js
 
 # Logs
 logs

@@ -24,7 +24,7 @@ exports.firebaseServiceAccount = () => {
     type: "service_account",
     project_id: stringVals.FIREBASE_PROJECT_ID,
     private_key_id: stringVals.FIREBASE_PRIVATE_KEY_ID,
-    private_key: stringVals.FIREBASE_KEY,
+    private_key: stringVals.FIREBASE_PRIVATE_KEY,
     client_email: stringVals.FIREBASE_CLIENT_EMAIL,
     client_id: stringVals.FIREBASE_CLIENT_ID,
     auth_uri: stringVals.FIREBASE_AUTH_URI,
