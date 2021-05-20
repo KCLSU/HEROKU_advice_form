@@ -1,6 +1,32 @@
-node_modules
+node_modules/
+jspm_packages/
 
-.env
+.env*
 
 /.vscode
 .vscode
+
+./test.json
+test.json
+
+./test2.json
+test2.json
+
+kclsu-db1-firebase-adminsdk.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Mac files
+.DS_Store

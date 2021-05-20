@@ -1,7 +1,13 @@
-var { fetch } = require('./fetch');
-var { LOG_URL } = require('./stringVals');
+// var { fetch } = require('./fetch');
+// var { LOG_URL } = require('./stringVals');
 var parser = require('ua-parser-js');
-//switch to axios
+// Import Admin SDK
+var admin = require("firebase-admin");
+
+// Get a database reference to the database
+// var db = admin.database();
+// var errorsRef = db.ref("errors");
+
 
 //GET URL FOR ERROR LOG FIREBASE
 
@@ -29,6 +35,8 @@ exports.logError = (area, message, request, data = {}) => {
         origin: request.get('Origin')
     };
 
-    return fetch(LOG_URL, errorMsg, 'POST');
+    // errorsRef.push(errorMsg);
+
+    // return fetch(LOG_URL, errorMsg, 'POST');
 }
 
