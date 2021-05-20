@@ -1,10 +1,9 @@
 require('dotenv').config();
-const dbConfig = {};
-
 var PORT = process.env.PORT || 4000;
 exports.PORT = PORT;
-
 const developmentMode = PORT === 4000;
+const dbConfig = developmentMode ? require('../dbconfig.js').dbconfig : {};
+
 
 exports.AGENCY_NAME = "KCLSU Advice";
 exports.CONTACT_EMAIL = "help@kclsu.org";
