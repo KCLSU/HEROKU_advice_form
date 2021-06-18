@@ -10,8 +10,8 @@ exports.cloudinary = () => {
 
 exports.advicepro = () => {
     return {
-      ContractKey: stringVals.ADVICE_PRO_CONTRACT,
-      AgencyAPIKey: stringVals.ADVICE_PRO_API,
+      ContractKey: stringVals.CONTRACT_KEY,
+      AgencyAPIKey: stringVals.AGENCY_API_KEY,
       SourceAgencyName: stringVals.AGENCY_NAME,
       SourceContactEmail: stringVals.CONTACT_EMAIL,
       SourcePhoneNumber: stringVals.PHONE_NUMBER,
