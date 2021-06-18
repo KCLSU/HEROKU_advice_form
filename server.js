@@ -9,9 +9,9 @@ var constants = require('./utils/stringVals');
 var configs = require('./utils/configs');
 
 // Fetch the service account key JSON file contents
-let serviceAccount , databaseURL = constants.FIREBASE_DB_URI;
+let serviceAccount, databaseURL = constants.FIREBASE_DB_URI;
 if (constants.PORT === 4000){
-  serviceAccount = require("./kclsu-db1-firebase-adminsdk.json");
+  serviceAccount = require(constants.FIREBASE_SERVICE_ACCOUNT_URL);
   databaseURL = constants.FIREBASE_DB_TEST_URI;
 } else serviceAccount = configs.firebaseServiceAccount();
 

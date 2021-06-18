@@ -53,7 +53,6 @@ class AdviceproSubmission {
       const logObject = {...this.response };
       var db = admin.database();
       var submissions = db.ref("advice/submissions");
-      console.log('creating record')
       const newSubmission = submissions.push(logObject);
       this.submissionId = newSubmission.key;
       this.response.submissionId = newSubmission.key;
@@ -66,7 +65,8 @@ class AdviceproSubmission {
       result.status = successful ? 'Submitted' : 'Failed';
       result.error = !successful;
       result.message = message;
-      result.date = this.date;
+      result.date = this.date.toString();
+      result.timestamp = this.date.getTime();
       result.lastName = this.lastName;
       result.submissionId = this.submissionId;
       return result;

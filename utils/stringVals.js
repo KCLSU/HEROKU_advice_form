@@ -34,7 +34,7 @@ exports.FIREBASE_TOKEN_URI = "https://oauth2.googleapis.com/token"
 exports.FIREBASE_AUTH_PROVIDER = "https://www.googleapis.com/oauth2/v1/certs"
 exports.FIREBASE_CLIENT_X509_CERT_URL = process.env.FIREBASE_CLIENT_X509_CERT_URL
 
-
+exports.FIREBASE_SERVICE_ACCOUNT_URL = "./kclsu-db1-firebase-adminsdk.json";
 exports.FIREBASE_DB_KEY = process.env.FIREBASE_DB_KEY;
 exports.FIREBASE_DB_URI = developmentMode ? dbConfig.FIREBASE_DB_URI : process.env.FIREBASE_DB_URI 
 exports.FIREBASE_DB_TEST_URI = developmentMode ? dbConfig.FIREBASE_DB_TEST_URI : process.env.FIREBASE_DB_TEST_URI 
