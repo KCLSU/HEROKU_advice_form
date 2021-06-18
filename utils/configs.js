@@ -20,9 +20,10 @@ exports.advicepro = () => {
 }
 
 exports.firebaseServiceAccount = () => {
+  const privateKey = stringVals.FIREBASE_PRIVATE_KEY;
   return {
     "project_id": stringVals.FIREBASE_PROJECT_ID,
-    "private_key": stringVals.FIREBASE_PRIVATE_KEY,
+    "private_key": privateKey.replace(/\\n/g, '\n'),
     "client_email": stringVals.FIREBASE_CLIENT_EMAIL,
     "auth_uri": stringVals.FIREBASE_AUTH_URI,
     "token_uri": stringVals.FIREBASE_TOKEN_URI,
