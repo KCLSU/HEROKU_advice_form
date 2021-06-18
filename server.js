@@ -15,10 +15,14 @@ if (constants.PORT === 4000){
   databaseURL = constants.FIREBASE_DB_TEST_URI;
 } else serviceAccount = configs.firebaseServiceAccount();
 
+
 //Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: databaseURL
+  databaseURL: databaseURL,
+  databaseAuthVariableOverride: {
+    uid: constants.FIREBASE_DB_SERVER_UID
+  }
 });
 
 const imageStorage = multer.diskStorage({
@@ -37,7 +41,7 @@ app.use(cors());
 
 app.use(allRoutes);
 
-app.listen(contants.PORT, () => {
+app.listen(constants.PORT, () => {
   console.log("The server is running and listening on port " + constants.PORT)
 });
 

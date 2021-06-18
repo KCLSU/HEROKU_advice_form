@@ -9,7 +9,7 @@ exports.approveUser = (req, res, next) => {
     let validUser = validIp || 
         req.get('origin').includes('kclsu.org')
         && req.get('referer').includes('manager')
-        && req.secure;
+        // && req.secure;
     if (!validUser){
         res.status(400).send(errorResponse('The user in invalid'));
         //UPDATE DATABASE ERROR LOG

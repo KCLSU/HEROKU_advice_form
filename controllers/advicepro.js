@@ -18,21 +18,19 @@ exports.submitToAdvicePro = async (req, res) => {
 
     } catch(err) {
         console.log('Inside the catch')
-        const msg = err.message? err.message : 'Failed to submit to advicepro --- submitToAdvicePro --- catch block error';
+        const msg = err.message ? err.message : 'Failed to submit to advicepro --- submitToAdvicePro --- catch block error';
         res.status(500).send(submission.createResponse(false, msg));
         
         //UPDATE DATABASE RECORD OF SUBMISSION
-        submission.createRecord()
-        .catch(er => console.log(er))
+        submission.createRecord();
 
         //UPDATE DATABASE ERROR LOG
         //WE COULD STORE ENTIRE FORM SUBMISSION? 
         const storedData = {};
-        storedData.adviceproSubmissionId = submission.submissionId;
-        storedData.lastname = submission.lastName;
+        if(submission.submissionId) storedData.adviceproSubmissionId = submission.submissionId;
+        if(submission.lastName) storedData.lastname = submission.lastName;
         // storedData.email = formData.EmailAddress;
         logError('advice', msg, req, { storedData, error: err });
-        
     }
 
 }

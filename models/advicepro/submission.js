@@ -1,6 +1,7 @@
+var admin = require("firebase-admin");
 var configs = require('../../utils/configs');
 var { fetch } = require('../../utils/fetch');
-var { ADVICE_PRO_URL, ADVICEPRO_RECORDS_DATABASE_URL } = require('../../utils/stringVals');
+var { ADVICE_PRO_URL, PORT, DEVELOPMENT_MODE } = require('../../utils/stringVals');
 
 
 class AdviceproSubmission {
@@ -17,7 +18,23 @@ class AdviceproSubmission {
     submit(){
         const adviceproConfig = configs.advicepro;
         const packagedData = { ...this.data, ...adviceproConfig };
-        return fetch(ADVICE_PRO_URL, packagedData, 'POST', true)
+       
+        // FOR DEVELOPMENT ENVIRONMENT ONLY
+        if (DEVELOPMENT_MODE){
+          return new Promise(resolve => {
+            var db = admin.database();
+            var submissions = db.ref("advice/advicepro");
+            try {
+              const newSubmission = submissions.push(this.createResponse(true, 'Form successfully submitted'));
+              resolve(newSubmission)
+            } catch {
+              const message = result.Message || `Advice Pro Response contained no message.`
+              this.createResponse(false, message)
+              throw new Error(message);
+            }
+          })
+        } //FOR PRODUCTION ENVIRONMENT
+        else return fetch(ADVICE_PRO_URL, packagedData, 'POST', true)
                   .then(result => {
                     //CHECK GOOGLE STATUS CODE
                     if (result.HttpStatusCode && +result.HttpStatusCode >=200 && +result.HttpStatusCode < 204){
@@ -34,13 +51,12 @@ class AdviceproSubmission {
     //CREATE A NEW DATABASE RECORD OF THIS ENTRY
     createRecord(){
       const logObject = {...this.response };
-      const url = `${ADVICEPRO_RECORDS_DATABASE_URL}.json`;
+      var db = admin.database();
+      var submissions = db.ref("advice/submissions");
       console.log('creating record')
-      return fetch(url, logObject, 'POST')
-              .then(data => {
-                this.submissionId = data.name;
-                this.response.submissionId = data.name;
-              })
+      const newSubmission = submissions.push(logObject);
+      this.submissionId = newSubmission.key;
+      this.response.submissionId = newSubmission.key;
     }
 
 
