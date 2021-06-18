@@ -16,10 +16,8 @@ class AdviceproSubmission {
 
     //SUBMIT TO THE ADVICE PRO API
     submit(){
-        const adviceproConfig = configs.advicepro;
+        const adviceproConfig = configs.advicepro();
         const packagedData = { ...this.data, ...adviceproConfig };
-        console.log('data sent to advicepro:')
-        console.log(packagedData)
         // FOR DEVELOPMENT ENVIRONMENT ONLY
         if (DEVELOPMENT_MODE){
           console.log('Submitting to advicepro testing db')
