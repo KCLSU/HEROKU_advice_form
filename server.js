@@ -8,9 +8,12 @@ var admin = require('firebase-admin');
 var constants = require('./utils/stringVals');
 var configs = require('./utils/configs');
 
+var DEVPORT = 4000;
+var PORT = process.env.PORT || DEVPORT;
+
 // Fetch the service account key JSON file contents
 let serviceAccount, databaseURL = constants.FIREBASE_DB_URI;
-if (constants.PORT === 4000){
+if (PORT === 4000){
   serviceAccount = require(constants.FIREBASE_SERVICE_ACCOUNT_URL);
   databaseURL = constants.FIREBASE_DB_TEST_URI;
 } else serviceAccount = configs.firebaseServiceAccount();
@@ -41,7 +44,7 @@ app.use(cors());
 
 app.use(allRoutes);
 
-app.listen(constants.PORT, () => {
-  console.log("The server is running and listening on port " + constants.PORT)
+app.listen(PORT, () => {
+  console.log("The server is running and listening on port " + PORT)
 });
 
