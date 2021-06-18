@@ -12,6 +12,7 @@ exports.PHONE_NUMBER = "020 7848 1588";
 exports.FULL_NAME= "KCLSU website";
 exports.FIXIE_URL = process.env.FIXIE_URL;
 exports.CONTRACT_KEY = process.env.ADVICE_PRO_CONTRACT;
+exports.AGENCY_API_KEY = process.env.ADVICE_PRO_API;
 exports.ADVICE_PRO_URL = developmentMode ? process.env.FIREBASE_DB_TEST_URI + '/advice/advicepro' : process.env.ADVICE_PRO_URL;
 exports.ADVICEPRO_RECORDS_DATABASE_URL = developmentMode ? process.env.FIREBASE_DB_TEST_URI + '/advice/submissions' : process.env.FIREBASE_DB_URI + '/advice/submissions';
 
