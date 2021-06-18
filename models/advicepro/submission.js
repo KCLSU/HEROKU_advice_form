@@ -1,7 +1,7 @@
 var admin = require("firebase-admin");
 var configs = require('../../utils/configs');
 var { fetch } = require('../../utils/fetch');
-var { ADVICE_PRO_URL, PORT, DEVELOPMENT_MODE } = require('../../utils/stringVals');
+var { ADVICE_PRO_URL, DEVELOPMENT_MODE } = require('../../utils/stringVals');
 
 
 class AdviceproSubmission {
