@@ -18,9 +18,11 @@ class AdviceproSubmission {
     submit(){
         const adviceproConfig = configs.advicepro;
         const packagedData = { ...this.data, ...adviceproConfig };
-       
+        console.log('data sent to advicepro:')
+        console.log(packagedData)
         // FOR DEVELOPMENT ENVIRONMENT ONLY
         if (DEVELOPMENT_MODE){
+          console.log('Submitting to advicepro testing db')
           return new Promise(resolve => {
             var db = admin.database();
             var submissions = db.ref("advice/advicepro");
