@@ -5,14 +5,17 @@ const stringVals = require('../utils/stringVals');
 
 exports.fetchNews = (req, res) => {
     const id = req.params.id;
-    fetch(stringVals.MSL_NEWS + id)
-    .then(result => {
-        res.status(200).send(result)
-    })
-    .catch(err => {
-        res.status(500).send(errorResponse('Failed to retrieve News from MSL', {response: err}));
-        logError('MSL', 'Failed to retrieve News', req, err)
-    })
+    if (id){
+        fetch(stringVals.MSL_NEWS + id)
+        .then(result => {
+            res.status(200).send(result)
+        })
+        .catch(err => {
+            res.status(500).send(errorResponse('Failed to retrieve News from MSL', {response: err}));
+            logError('MSL', 'Failed to retrieve News', req, err)
+        })
+    }
+    else res.status(202).send([]);
 }
 
 exports.fetchEvents = (req, res) => {
