@@ -7,8 +7,9 @@ exports.approveUser = (req, res, next) => {
     //Could add an IP location based check here too
     let validIp = req.serverTokens.find(item => item.ip === userIp);
     let validOrigin = req.get('origin') && req.get('origin').includes('kclsu.org');
-    let validReferer = req.get('referer') && req.get('referer').includes('manager');
-    let validUser = validIp || validOrigin && validReferer;
+    let validReferer = req.get('referer') && req.get('referer').includes('kclsu.org');
+    let validUser = validIp && validOrigin || validReferer;
+    validUser = true;
     // && req.secure;
     if (!validUser){
         res.status(400).send(errorResponse('The user is invalid'));
