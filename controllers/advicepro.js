@@ -6,18 +6,15 @@ exports.submitToAdvicePro = async (req, res) => {
     const submission = new AdviceProSubmission(formData);
     
     try {
-        console.log('submitted to advice pro')
         await submission.submit(); // SUBMIT TO ADVICE PRO
         await submission.createRecord(); //UPDATE DATABASE RECORD OF SUBMISSION
         if (submission.response.status === 'Submitted'){
             res.status(200).send(submission.response);
         } else {
-            console.log('Inside the if')
             res.status(400).send(submission.response);
         } 
 
     } catch(err) {
-        console.log('Inside the catch')
         const msg = err.message ? err.message : 'Failed to submit to advicepro --- submitToAdvicePro --- catch block error';
         res.status(500).send(submission.createResponse(false, msg));
         
