@@ -13,6 +13,7 @@ exports.createToken = (req, res, next) => {
     };
     const cookieSettings = {
       maxAge: 90000,
+      secure: true,
       httpOnly: false
     };
 
@@ -21,10 +22,6 @@ exports.createToken = (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Credentials', true);
     
-    if (DEVELOPMENT_MODE){
-      cookieSettings.secure = true;
-    }
-
     res.cookie('kclsutoken', newToken, cookieSettings);
     res.status(200).send(newToken);
 }
