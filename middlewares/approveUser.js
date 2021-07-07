@@ -9,7 +9,10 @@ exports.approveUser = (req, res, next) => {
     let validOrigin = req.get('origin') && req.get('origin').includes('kclsu.org');
     let validReferer = req.get('referer') && req.get('referer').includes('kclsu.org');
     let validUser = validIp && validOrigin || validReferer;
+    
+    //FOR DEVELOPMENT
     validUser = true;
+    
     // && req.secure;
     if (!validUser){
         res.status(400).send(errorResponse('The user is invalid'));

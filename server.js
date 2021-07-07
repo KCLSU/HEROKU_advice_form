@@ -9,12 +9,12 @@ var admin = require('firebase-admin');
 var constants = require('./utils/stringVals');
 var configs = require('./utils/configs');
 
-var DEVPORT = 4000;
+var DEVPORT = constants.DEVELOPMENT_PORT;
 var PORT = process.env.PORT || DEVPORT;
 
 // Fetch the service account key JSON file contents
 let serviceAccount, databaseURL = constants.FIREBASE_DB_URI;
-if (PORT === 4000){
+if (PORT === DEVPORT){
   serviceAccount = require(constants.FIREBASE_SERVICE_ACCOUNT_URL);
   databaseURL = constants.FIREBASE_DB_TEST_URI;
 } else serviceAccount = configs.firebaseServiceAccount();
@@ -42,7 +42,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(multer({ storage: imageStorage }).single('file_upload'));
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cors());
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use(allRoutes);
 

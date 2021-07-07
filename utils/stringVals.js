@@ -1,10 +1,13 @@
 require('dotenv').config();
 var DEVPORT = 4000;
 var PORT = process.env.PORT || DEVPORT;
-exports.PORT = PORT;
 const developmentMode = PORT === DEVPORT;
 const dbConfig = developmentMode ? require('../dbconfig.js').dbconfig : {};
 exports.DEVELOPMENT_MODE = developmentMode;
+exports.DEVELOPMENT_PORT = DEVPORT;
+exports.CLIENT_DEV_URI = 'http://localhost:9000';
+exports.HEROKU_URI = process.env.HEROKU_URI;
+exports.PORT = PORT;
 
 exports.AGENCY_NAME = "KCLSU Advice";
 exports.CONTACT_EMAIL = "help@kclsu.org";
@@ -18,7 +21,7 @@ exports.ADVICEPRO_RECORDS_DATABASE_URL = developmentMode ? process.env.FIREBASE_
 
 
 //FOR AUTHENTICATION
-exports.KCLSU_CUSTOM_KEY = developmentMode? '123' : process.env.KCLSU_CUSTOM_KEY;
+exports.KCLSU_CUSTOM_KEY = developmentMode? dbConfig.DEVSERVER_TOKEN : process.env.KCLSU_CUSTOM_KEY;
 
 //CREDENTIALS FOR KCLSU FIREBASE REAL TIME DATABASE
 

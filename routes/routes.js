@@ -46,7 +46,7 @@ router.get('/serverToken',
 router.post('/authenticate', controllers.auth.authenticate);
 
         //AUTH FOR KCLSU PROTECTED PAGES
-router.post('/protectedauth/:key?',
+router.post('/protectedauth/:key',
     attachToRequest,
     validateToken,
     controllers.auth.protectedauth
