@@ -15,8 +15,8 @@ exports.createToken = (req, res, next) => {
       maxAge: 90000
     }
 
-    const allowedOrigin = DEVELOPMENT_MODE ?  CLIENT_DEV_URI : HEROKU_URI;
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+    // const allowedOrigin = DEVELOPMENT_MODE ?  CLIENT_DEV_URI : HEROKU_URI;
+    // res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Credentials', true);
     if (DEVELOPMENT_MODE){
       cookieSettings.secure = true;

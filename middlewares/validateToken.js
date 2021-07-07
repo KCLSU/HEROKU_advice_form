@@ -13,8 +13,8 @@ exports.validateToken = (req, res, next) => {
        item.ip === userIp && item.token === cookieToken.token
     );
 
-    const allowedOrigin = DEVELOPMENT_MODE ?  CLIENT_DEV_URI : HEROKU_URI;
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+    // const allowedOrigin = DEVELOPMENT_MODE ?  CLIENT_DEV_URI : HEROKU_URI;
+    // res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Credentials', true);
     
 
