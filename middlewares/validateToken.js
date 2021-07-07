@@ -6,7 +6,7 @@ exports.validateToken = (req, res, next) => {
     const existingTokens = req.serverTokens;
     const cookieToken = req.cookies.kclsutoken || { token: null };
     const userIp = req.ip;
-
+    console.log(cookieToken)
     let validToken = existingTokens.find(item => 
        item.ip === userIp && item.token === cookieToken.token
     );
@@ -19,7 +19,7 @@ exports.validateToken = (req, res, next) => {
 
     if(!validToken){
         res.status(400).send(errorResponse('Error: Invalid token'));
-        logError('Token', 'Invalid Token supplied by client', req)
+        logError('Token', 'Invalid or non-existing token supplied by client: ' + cookieToken.token, req)
     }
     else next();
 }
