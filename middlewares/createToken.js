@@ -12,7 +12,8 @@ exports.createToken = (req, res, next) => {
       req.serverTokens.shift();
     };
     const cookieSettings = {
-      maxAge: 90000
+      maxAge: 90000,
+      httpOnly: false
     };
 
     const allowedOrigin = DEVELOPMENT_MODE ?  CLIENT_DEV_URI : KCLSU_URI;
