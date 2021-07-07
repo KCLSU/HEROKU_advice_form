@@ -1,3 +1,4 @@
+  
 require('dotenv').config();
 var DEVPORT = 4000;
 var PORT = process.env.PORT || DEVPORT;
@@ -7,6 +8,7 @@ exports.DEVELOPMENT_MODE = developmentMode;
 exports.DEVELOPMENT_PORT = DEVPORT;
 exports.CLIENT_DEV_URI = 'http://localhost:9000';
 exports.HEROKU_URI = process.env.HEROKU_URI;
+exports.KCLSU_URI = process.env.KCLSU_URI;
 exports.PORT = PORT;
 
 exports.AGENCY_NAME = "KCLSU Advice";
