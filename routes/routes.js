@@ -49,7 +49,6 @@ router.post('/authenticate', controllers.auth.authenticate);
 router.post('/protectedauth/:key',
     attachToRequest,
     approveUser,
-    validateToken,
     controllers.auth.protectedauth
 );
 
