@@ -48,6 +48,7 @@ router.post('/authenticate', controllers.auth.authenticate);
         //AUTH FOR KCLSU PROTECTED PAGES
 router.post('/protectedauth/:key',
     attachToRequest,
+    approveUser,
     validateToken,
     controllers.auth.protectedauth
 );

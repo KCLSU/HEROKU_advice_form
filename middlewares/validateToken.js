@@ -1,6 +1,6 @@
 const { errorResponse } = require("../utils/errorResponse");
 const { logError } = require("../utils/logError");
-const { DEVELOPMENT_MODE, CLIENT_DEV_URI, KCLSU_URI } = require('../utils/stringVals');
+const { KCLSU_URI } = require('../utils/stringVals');
 
 exports.validateToken = (req, res, next) => {
     const existingTokens = req.serverTokens;
@@ -11,9 +11,9 @@ exports.validateToken = (req, res, next) => {
        item.ip === userIp && item.token === cookieToken.token
     );
 
-    const allowedOrigin = DEVELOPMENT_MODE ?  CLIENT_DEV_URI : KCLSU_URI;
+    const allowedOrigin = req.get('origin') || KCLSU_URI;
 
-    res.setHeader('Access-Control-Allow-Origin', req.get('origin'));
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Credentials', true);
     
 
