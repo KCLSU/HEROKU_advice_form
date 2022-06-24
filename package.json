@@ -25,7 +25,7 @@
     "firebase-admin": "^9.8.0",
     "https-proxy-agent": "^2.2.4",
     "multer": "^1.4.2",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "ua-parser-js": "^0.7.24"
   },
   "devDependencies": {
